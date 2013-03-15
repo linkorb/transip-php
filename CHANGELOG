@@ -1,0 +1,27 @@
+TRANSIP API V4.1
+
+NEW
+ - Single distribution for all TransIP countries: added Transip_ApiSettings::$endpoint to determine which endpoint to target when making API requests
+
+
+TRANSIP API V4.0
+
+NEW:
+ - Improved security by using SSL based signatures for API requests.
+
+
+TRANSIP API V3.0
+
+NEW:
+ - check up to 20 domains within one call: Transip_DomainService::batchCheckAvailability()
+ - get information (price, renewal period, possible actions) about all TLDs offered with Transip_DomainService::getAllTldInfos() and Transip_DomainService::getTldInfo()
+ - get the current running action a domain is doing and/or retry/cancel with getCurrentDomainAction(), retryCurrentDomainActionWithNewData(), retryTransferWithDifferentAuthCode(), cancelDomainAction()
+ - The domain object now holds information registrationDate, renewalDate, authCode and isLocked status
+ - Get all Colocation items with ColocationService::getColoNames()
+ - Manage IP/Network info with getIpRanges(), createIpAddress(), and more
+ - Manage, order and modify Forwards with the ForwardService
+ - Manage, order and modify Webhosting with the WebhostingService
+
+DEPRECATED:
+ - Transip_DomainService::getAuthCode(). Returned in Transip_DomainService::getInfo() now.
+ - Transip_DomainService::getIsLocked(). Returned in Transip_DomainService::getInfo() now.

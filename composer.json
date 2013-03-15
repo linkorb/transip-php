@@ -1,0 +1,25 @@
+{
+    "name": "linkorb/transip-php",
+    "description": "Unofficial TransIP PHP API Repository. Composer-ready.",
+    "homepage": "http://www.github.com/linkorb/transip-php",
+    "keywords": ["php", "api"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "Joost Faassen",
+            "email": "j.faassen@linkorb.com",
+	    "role": "Packaging for composer"
+        },
+        {
+            "name": "TransIP B.V.",
+            "email": "support@transip.nl",
+	    "role": "Source files"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0"
+    },
+    "autoload": {
+	    "classmap": ["Transip/"]
+    }
+}
