@@ -8,18 +8,18 @@
         {
             "name": "Joost Faassen",
             "email": "j.faassen@linkorb.com",
-	    "role": "Packaging for composer"
+            "role": "Packaging for composer"
         },
         {
             "name": "TransIP B.V.",
             "email": "support@transip.nl",
-	    "role": "Source files"
+            "role": "Source files"
         }
     ],
     "require": {
         "php": ">=5.0.0"
     },
     "autoload": {
-	    "classmap": ["Transip/"]
+        "classmap": ["Transip/"]
     }
 }

@@ -16,13 +16,15 @@ require_once('DomainAction.php');
  * @package Transip
  * @class DomainService
  * @author TransIP (support@transip.nl)
- * @version 20121211 12:04
+ * @version 20130704 07:11
  */
 class Transip_DomainService
 {
 	// These fields are SOAP related
 	/** The SOAP service that corresponds with this class. */
 	const SERVICE = 'DomainService';
+	/** The API version. */
+	const API_VERSION = '4.2';
 	/** @var SoapClient  The SoapClient used to perform the SOAP calls. */
 	protected static $_soapClient = null;
 
@@ -86,6 +88,7 @@ class Transip_DomainService
 
 		self::$_soapClient->__setCookie('timestamp', $timestamp);
 		self::$_soapClient->__setCookie('nonce', $nonce);
+		self::$_soapClient->__setCookie('clientVersion', self::API_VERSION);
 		self::$_soapClient->__setCookie('signature', self::_urlencode(self::_sign(array_merge($parameters, array(
 			'__service'   => self::SERVICE,
 			'__hostname'  => $endpoint,
@@ -194,15 +197,20 @@ class Transip_DomainService
 	const AVAILABILITY_UNAVAILABLE = 'unavailable';
 	const AVAILABILITY_NOTFREE = 'notfree';
 	const AVAILABILITY_FREE = 'free';
+	const AVAILABILITY_INTERNALPULL = 'internalpull';
 	const CANCELLATIONTIME_END = 'end';
 	const CANCELLATIONTIME_IMMEDIATELY = 'immediately';
+	const ACTION_REGISTER = 'register';
+	const ACTION_TRANSFER = 'transfer';
+	const ACTION_INTERNALPULL = 'internalpull';
 
 	/**
 	 * Checks the availability of multiple domains.
 	 *
-	 * @param string[] $domainNames the domain names to check for availability. A maximum of 20 domainNames at once can be checked.
-	 * @return Transip_DomainCheckResult[] A list of DomainCheckResult objects, holding the domainName and the status per result.
+	 * @param string[] $domainNames The domain names to check for availability. A maximum of 20 domainNames at once
 	 * @example examples/DomainService-batchCheckAvailability.php
+	 * @throws ApiException
+	 * @return Transip_DomainCheckResult[] A list of DomainCheckResult objects, holding the domainName and the status per result.
 	 */
 	public static function batchCheckAvailability($domainNames)
 	{
@@ -212,7 +220,7 @@ class Transip_DomainService
 	/**
 	 * Checks the availability of a domain.
 	 *
-	 * @param string $domainName the domain name to check for availability
+	 * @param string $domainName The domain name to check for availability.
 	 * @return string the availability status of the domain name:
 	 * @example examples/DomainService-checkAvailability.php
 	 */
@@ -248,8 +256,9 @@ class Transip_DomainService
 	 * Get information about a domainName.
 	 *
 	 * @param string $domainName The domainName to get the information for.
-	 * @return Transip_Domain A Domain object holding the data for the requested domainName.
 	 * @example examples/DomainService-DomainService-getInfo.php
+	 * @throws ApiException  If the Domain could not be found.
+	 * @return Transip_Domain A Domain object holding the data for the requested domainName.
 	 */
 	public static function getInfo($domainName)
 	{
@@ -260,6 +269,7 @@ class Transip_DomainService
 	 * Get information about a list of Domain names.
 	 *
 	 * @param string[] $domainNames A list of Domain names you want information for.
+	 * @throws Exception     If something else went wrong.
 	 * @return Transip_Domain[] Domain objects.
 	 */
 	public static function batchGetInfo($domainNames)
@@ -295,9 +305,10 @@ class Transip_DomainService
 	/**
 	 * Registers a domain name, will automatically create and sign a proposition for it
 	 *
-	 * @param Transip_Domain $domain the Domain object holding information about the domain that needs to be registered.
+	 * @param Transip_Domain $domain The Domain object holding information about the domain that needs to be registered.
 	 * @requires readwrite mode
 	 * @example examples/DomainService-DomainService-register-whois.php
+	 * @throws ApiException
 	 */
 	public static function register($domain)
 	{
@@ -308,10 +319,11 @@ class Transip_DomainService
 	 * Cancels a domain name, will automatically create and sign a cancellation document
 	 * Please note that domains with webhosting cannot be cancelled through the API
 	 *
-	 * @param string $domainName the domainname that needs to be cancelled
-	 * @param string $endTime the time to cancel the domain (DomainService::CANCELLATIONTIME_END (end of contract) or DomainService::CANCELLATIONTIME_IMMEDIATELY (as soon as possible))
+	 * @param string $domainName The domainname that needs to be cancelled.
+	 * @param string $endTime The time to cancel the domain (DomainService::CANCELLATIONTIME_END (end of contract)
 	 * @requires readwrite mode
 	 * @example examples/DomainService-DomainService-cancel.php
+	 * @throws ApiException
 	 */
 	public static function cancel($domainName, $endTime)
 	{
@@ -399,6 +411,7 @@ class Transip_DomainService
 	 * @param string $domainName the domainName to change the owner for
 	 * @param Transip_WhoisContact $registrantWhoisContact the new contact data for this
 	 * @example examples/DomainService-DomainService-setOwner.php
+	 * @throws ApiException
 	 */
 	public static function setOwner($domainName, $registrantWhoisContact)
 	{
@@ -431,9 +444,10 @@ class Transip_DomainService
 	/**
 	 * Get info about a specific TLD
 	 *
-	 * @param string $tldName The tld to get information abot
-	 * @return Transip_Tld Tld object with info about this Tld
+	 * @param string $tldName The tld to get information about.
 	 * @example examples/DomainService-DomainService-getAllTldInfos.php
+	 * @throws ApiException  If the TLD could not be found.
+	 * @return Transip_Tld Tld object with info about this Tld
 	 */
 	public static function getTldInfo($tldName)
 	{
@@ -457,8 +471,9 @@ class Transip_DomainService
 	 * the name of the Domain, the nameserver, contacts, dnsEntries fields contain the new data for this domain.
 	 * Set a field to null to not change the data.
 	 *
-	 * @param Transip_Domain $domain the domain with data to retry
+	 * @param Transip_Domain $domain The domain with data to retry
 	 * @example examples/DomainService-DomainService-domainActions.php
+	 * @throws ApiException
 	 */
 	public static function retryCurrentDomainActionWithNewData($domain)
 	{
@@ -468,9 +483,10 @@ class Transip_DomainService
 	/**
 	 * Retry a transfer action with a new authcode
 	 *
-	 * @param Transip_Domain $domain the domain to try the transfer with a different authcode for
+	 * @param Transip_Domain $domain The domain to try the transfer with a different authcode for
 	 * @param string $newAuthCode New authorization code to try
 	 * @example examples/DomainService-DomainService-domainActions.php
+	 * @throws ApiException
 	 */
 	public static function retryTransferWithDifferentAuthCode($domain, $newAuthCode)
 	{
@@ -482,6 +498,7 @@ class Transip_DomainService
 	 *
 	 * @param Transip_Domain $domain the domain to cancel the action for
 	 * @example examples/DomainService-DomainService-domainActions.php
+	 * @throws ApiException
 	 */
 	public static function cancelDomainAction($domain)
 	{
