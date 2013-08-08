@@ -2,12 +2,12 @@
 
 ## What is it?
 
-This is an unofficial repository, mirroring the TransIP PHP library
+This is a repo mirroring the TransIP PHP library
 
 ## Benefits:
 
-* A direct mirror of the library, available through git
-* Made composer-ready, simply add `linkorb/transip-php`
+* A direct mirror of the library, available through Git
+* Made composer-ready, simply add `linkorb/transip-php` to your composer.json file
 * Stripped the examples to keep it small
 
 The original library, including examples, can be downloaded from: http://www.transip.nl/api
@@ -20,9 +20,9 @@ For more information regarding this library, please visit http://www.transip.nl/
 
 ## Maintenance
 
-When new versions of the library are release, we intend to update this repo fast.
+When new versions of the library are released, we intend to update this repo fast.
 
 Contributions and pull-requests welcome!
 
-
+This repo is in no way affiliated with or endorsed by TransIP.
 
