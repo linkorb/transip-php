@@ -10,33 +10,31 @@
  */
 class Transip_WebhostingPackage
 {
-	/**
+    /**
 	 * Name of the webhosting package
 	 *
 	 * @var string
 	 */
-	public $name;
+    public $name;
 
-	/**
+    /**
 	 * Describes this webhosting package
 	 *
 	 * @var string
 	 */
-	public $description;
+    public $description;
 
-	/**
+    /**
 	 * Price in euros.
 	 *
 	 * @var float
 	 */
-	public $price;
+    public $price;
 
-	/**
+    /**
 	 * Price for renewing the package in euros.
 	 *
 	 * @var float
 	 */
-	public $renewalPrice;
+    public $renewalPrice;
 }
-
-?>

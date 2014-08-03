@@ -11,33 +11,31 @@
  */
 class Transip_DataCenterVisitor
 {
-	/**
+    /**
 	 * The name of the visitor
 	 *
 	 * @var string
 	 */
-	public $name;
+    public $name;
 
-	/**
+    /**
 	 * The reservation number of the visitor.
 	 *
 	 * @var string
 	 */
-	public $reservationNumber;
+    public $reservationNumber;
 
-	/**
+    /**
 	 * The accesscode of the visitor.
 	 *
 	 * @var string
 	 */
-	public $accessCode;
+    public $accessCode;
 
-	/**
+    /**
 	 * true iff this visitor been registered before at the datacenter. if true, does not need the accesscode
 	 *
 	 * @var boolean
 	 */
-	public $hasBeenRegisteredBefore;
+    public $hasBeenRegisteredBefore;
 }
-
-?>

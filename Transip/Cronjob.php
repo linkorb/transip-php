@@ -11,71 +11,71 @@
  */
 class Transip_Cronjob
 {
-	/**
+    /**
 	 * Cronjob name, a user defined name for this cronjob
 	 *
 	 * @var string
 	 */
-	public $name;
+    public $name;
 
-	/**
+    /**
 	 * URL this url will be called when the cronjob executes.
 	 * Must be a valid (subdomain) within the current webhosting package's
 	 * domain name.
 	 *
 	 * @var string
 	 */
-	public $url;
+    public $url;
 
-	/**
+    /**
 	 * Any output of this cronjob will be e-mailed to this email-address
 	 *
 	 * @var string
 	 */
-	public $email;
+    public $email;
 
-	/**
+    /**
 	 * What minute of the hour to run the cron
 	 *
 	 * @see http://en.wikipedia.org/wiki/Cron
 	 * @var string
 	 */
-	public $minuteTrigger;
+    public $minuteTrigger;
 
-	/**
+    /**
 	 * What hour of the day to run the cron
 	 *
 	 * @see http://en.wikipedia.org/wiki/Cron
 	 * @var string
 	 */
-	public $hourTrigger;
+    public $hourTrigger;
 
-	/**
+    /**
 	 * What day of the month to run the cron
 	 *
 	 * @see http://en.wikipedia.org/wiki/Cron
 	 * @var string
 	 */
-	public $dayTrigger;
+    public $dayTrigger;
 
-	/**
+    /**
 	 * what month of the year to run the cron
 	 *
 	 * @see http://en.wikipedia.org/wiki/Cron
 	 * @var string
 	 */
-	public $monthTrigger;
+    public $monthTrigger;
 
-	/**
+    /**
 	 * what day of the week to run the cron
 	 * range: 0-7 where both 0 and 7 are Sunday
 	 *
 	 * @see http://en.wikipedia.org/wiki/Cron
 	 * @var string
 	 */
-	public $weekdayTrigger;
+    public $weekdayTrigger;
 
-	/**
+    /**
 	 * Create a new cronjob
 	 *
 	 * @param string $name Cronjob name
@@ -87,17 +87,15 @@ class Transip_Cronjob
 	 * @param string $monthTrigger Month field for cronjob
 	 * @param string $weekdayTrigger Weekday field for cronjob
 	 */
-	public function __construct($name, $url, $email, $minuteTrigger, $hourTrigger, $dayTrigger, $monthTrigger, $weekdayTrigger)
-	{
-		$this->name = $name;
-		$this->url = $url;
-		$this->email = $email;
-		$this->minuteTrigger = $minuteTrigger;
-		$this->hourTrigger = $hourTrigger;
-		$this->dayTrigger = $dayTrigger;
-		$this->monthTrigger = $monthTrigger;
-		$this->weekdayTrigger = $weekdayTrigger;
-	}
+    public function __construct($name, $url, $email, $minuteTrigger, $hourTrigger, $dayTrigger, $monthTrigger, $weekdayTrigger)
+    {
+        $this->name = $name;
+        $this->url = $url;
+        $this->email = $email;
+        $this->minuteTrigger = $minuteTrigger;
+        $this->hourTrigger = $hourTrigger;
+        $this->dayTrigger = $dayTrigger;
+        $this->monthTrigger = $monthTrigger;
+        $this->weekdayTrigger = $weekdayTrigger;
+    }
 }
-
-?>

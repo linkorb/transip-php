@@ -5,7 +5,7 @@
  */
 class Transip_ApiSettings
 {
-	/**
+    /**
 	 * The mode in which the API operates, can be either:
 	 *		readonly
 	 *		readwrite
@@ -13,9 +13,9 @@ class Transip_ApiSettings
 	 * In readonly mode, no modifying functions can be called.
 	 * To make persistent changes, readwrite mode should be enabled.
 	 */
-	public static $mode = 'readwrite';
+    public static $mode = 'readwrite';
 
-	 /**
+     /**
 	 * TransIP API endpoint to connect to.
 	 *
 	 * e.g.:
@@ -24,16 +24,16 @@ class Transip_ApiSettings
 	 * 		'api.transip.be'
 	 * 		'api.transip.eu'
 	 */
-	public static $endpoint = 'api.transip.nl';
+    public static $endpoint = 'api.transip.nl';
 
-	/**
+    /**
 	 * Your login name on the TransIP website.
 	 *
 	 */
-	public static $login = '';
+    public static $login = '';
 
-	/**
+    /**
 	 * One of your private keys; these can be requested via your Controlpanel
 	 */
-	public static $privateKey = '';
+    public static $privateKey = '';
 }

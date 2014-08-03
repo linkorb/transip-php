@@ -10,54 +10,52 @@
  */
 class Transip_DomainBranding
 {
-	/**
+    /**
 	 * The company name displayed in transfer-branded e-mails
 	 *
 	 * @var string
 	 */
-	public $companyName;
+    public $companyName;
 
-	/**
+    /**
 	 * The support email used for transfer-branded e-mails
 	 *
 	 * @var string
 	 */
-	public $supportEmail;
+    public $supportEmail;
 
-	/**
+    /**
 	 * The company url displayed in transfer-branded e-mails
 	 *
 	 * @var string
 	 */
-	public $companyUrl;
+    public $companyUrl;
 
-	/**
+    /**
 	 * The terms of usage url as displayed in transfer-branded e-mails
 	 *
 	 * @var string
 	 */
-	public $termsOfUsageUrl;
+    public $termsOfUsageUrl;
 
-	/**
+    /**
 	 * The first generic bannerLine displayed in whois-branded whois output.
 	 *
 	 * @var string
 	 */
-	public $bannerLine1;
+    public $bannerLine1;
 
-	/**
+    /**
 	 * The second generic bannerLine displayed in whois-branded whois output.
 	 *
 	 * @var string
 	 */
-	public $bannerLine2;
+    public $bannerLine2;
 
-	/**
+    /**
 	 * The third generic bannerLine displayed in whois-branded whois output.
 	 *
 	 * @var string
 	 */
-	public $bannerLine3;
+    public $bannerLine3;
 }
-
-?>
