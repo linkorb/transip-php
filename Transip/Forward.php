@@ -10,71 +10,71 @@
  */
 class Transip_Forward
 {
-	const FORWARDMETHOD_DIRECT = 'direct';
-	const FORWARDMETHOD_FRAME = 'frame';
+    const FORWARDMETHOD_DIRECT = 'direct';
+    const FORWARDMETHOD_FRAME = 'frame';
 
-	/**
+    /**
 	 * Domain name to forward
 	 *
 	 * @var string
 	 */
-	public $domainName;
+    public $domainName;
 
-	/**
+    /**
 	 * URL to forward to
 	 *
 	 * @var string
 	 */
-	public $forwardTo;
+    public $forwardTo;
 
-	/**
+    /**
 	 * Method of forwarding; either Forward::FORWARDMETHOD_DIRECT or Forward::FORWARDMETHOD_FRAME
 	 *
 	 * @var string
 	 */
-	public $forwardMethod;
+    public $forwardMethod;
 
-	/**
+    /**
 	 * Frame title if forwardMethod is set to Forward::FORWARDMETHOD_FRAME
 	 *
 	 * @var string
 	 */
-	public $frameTitle;
+    public $frameTitle;
 
-	/**
+    /**
 	 * Frame favicon if forwardMethod is set to Forward::FORWARDMETHOD_FRAME
 	 *
 	 * @var string
 	 */
-	public $frameIcon;
+    public $frameIcon;
 
-	/**
+    /**
 	 * Set to true to forward to preserve the URL info after the domain.
 	 * For example, if set to true, http://www.sourcedomain.tld/test will
 	 * be forwarded to http://www.targeturl.tld/test
 	 *
 	 * @var boolean
 	 */
-	public $forwardEverything;
+    public $forwardEverything;
 
-	/**
+    /**
 	 * Set to true if subdomains should be appended to the target URL.
 	 * For example, if set to true, http://test.sourcedomain.tld/ will
 	 * be forwarded to http://www.targeturl.tld/test
 	 *
 	 * @var boolean
 	 */
-	public $forwardSubdomains;
+    public $forwardSubdomains;
 
-	/**
+    /**
 	 * The e-mailaddress all emails to this forward are forwarded to.
 	 * If empty, no e-mails are forwarded.
 	 *
 	 * @var string
 	 */
-	public $forwardEmailTo;
+    public $forwardEmailTo;
 
-	/**
+    /**
 	 * Constructs a Forward object.
 	 *
 	 * @param string   $domainName         Domain name to forward
@@ -86,17 +86,15 @@ class Transip_Forward
 	 * @param string   $forwardSubdomains  OPTIONAL Set to true if subdomains should be appended to the target URL.
 	 * @param string   $forwardEmailTo     OPTIONAL The e-mailaddress all emails to this forward are forwarded to.
 	 */
-	public function __construct($domainName, $forwardTo, $forwardMethod = 'direct', $frameTitle = '', $frameIcon = '', $forwardEveryThing = true, $forwardSubdomains = '', $forwardEmailTo = '')
-	{
-		$this->domainName        = $domainName;
-		$this->forwardTo         = $forwardTo;
-		$this->forwardMethod     = $forwardMethod;
-		$this->frameTitle        = $frameTitle;
-		$this->frameIcon         = $frameIcon;
-		$this->forwardEveryThing = $forwardEveryThing;
-		$this->forwardSubdomains = $forwardSubdomains;
-		$this->forwardEmailTo    = $forwardEmailTo;
-	}
+    public function __construct($domainName, $forwardTo, $forwardMethod = 'direct', $frameTitle = '', $frameIcon = '', $forwardEveryThing = true, $forwardSubdomains = '', $forwardEmailTo = '')
+    {
+        $this->domainName        = $domainName;
+        $this->forwardTo         = $forwardTo;
+        $this->forwardMethod     = $forwardMethod;
+        $this->frameTitle        = $frameTitle;
+        $this->frameIcon         = $frameIcon;
+        $this->forwardEveryThing = $forwardEveryThing;
+        $this->forwardSubdomains = $forwardSubdomains;
+        $this->forwardEmailTo    = $forwardEmailTo;
+    }
 }
-
-?>

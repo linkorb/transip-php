@@ -10,54 +10,54 @@
  */
 class Transip_MailBox
 {
-	const SPAMCHECKER_STRENGTH_AVERAGE = 'AVERAGE';
-	const SPAMCHECKER_STRENGTH_OFF = 'OFF';
-	const SPAMCHECKER_STRENGTH_LOW = 'LOW';
-	const SPAMCHECKER_STRENGTH_HIGH = 'HIGH';
+    const SPAMCHECKER_STRENGTH_AVERAGE = 'AVERAGE';
+    const SPAMCHECKER_STRENGTH_OFF = 'OFF';
+    const SPAMCHECKER_STRENGTH_LOW = 'LOW';
+    const SPAMCHECKER_STRENGTH_HIGH = 'HIGH';
 
-	/**
+    /**
 	 * Address of this mailbox
 	 *
 	 * @var string
 	 */
-	public $address;
+    public $address;
 
-	/**
+    /**
 	 * Mailbox spamchecker level. One of the Transip_MailBox::SPAMCHECKER_STRENGTH_* constants.
 	 *
 	 * @var string
 	 */
-	public $spamCheckerStrength;
+    public $spamCheckerStrength;
 
-	/**
+    /**
 	 * Mailbox max size in MB
 	 *
 	 * @var int
 	 */
-	public $maxDiskUsage;
+    public $maxDiskUsage;
 
-	/**
+    /**
 	 * True iff the MailBox currently has a VacationReply installed
 	 *
 	 * @var boolean
 	 */
-	public $hasVacationReply;
+    public $hasVacationReply;
 
-	/**
+    /**
 	 * VacationReply subject, used only when hasVacationReply is true
 	 *
 	 * @var string
 	 */
-	public $vacationReplySubject;
+    public $vacationReplySubject;
 
-	/**
+    /**
 	 * VacationReply message, used only when hasVacationReply is true
 	 *
 	 * @var string
 	 */
-	public $vacationReplyMessage;
+    public $vacationReplyMessage;
 
-	/**
+    /**
 	 * Create new mailbox
 	 *
 	 * @param string $address the address of this MailBox
@@ -67,15 +67,13 @@ class Transip_MailBox
 	 * @param string $vacationReplySubject Subject of vacation reply
 	 * @param string $vacationReplyMessage Message of vacation reply
 	 */
-	public function __construct($address, $spamCheckerStrength = 'AVERAGE', $maxDiskUsage = 20, $hasVacationReply = false, $vacationReplySubject = '', $vacationReplyMessage = '')
-	{
-		$this->address = $address;
-		$this->spamCheckerStrength = $spamCheckerStrength;
-		$this->maxDiskUsage = $maxDiskUsage;
-		$this->hasVacationReply = $hasVacationReply;
-		$this->vacationReplySubject = $vacationReplySubject;
-		$this->vacationReplyMessage = $vacationReplyMessage;
-	}
+    public function __construct($address, $spamCheckerStrength = 'AVERAGE', $maxDiskUsage = 20, $hasVacationReply = false, $vacationReplySubject = '', $vacationReplyMessage = '')
+    {
+        $this->address = $address;
+        $this->spamCheckerStrength = $spamCheckerStrength;
+        $this->maxDiskUsage = $maxDiskUsage;
+        $this->hasVacationReply = $hasVacationReply;
+        $this->vacationReplySubject = $vacationReplySubject;
+        $this->vacationReplyMessage = $vacationReplyMessage;
+    }
 }
-
-?>
