@@ -16,7 +16,6 @@ require_once('DomainAction.php');
  * @package Transip
  * @class DomainService
  * @author TransIP (support@transip.nl)
- * @version 20130704 07:11
  */
 class Transip_DomainService
 {
@@ -24,7 +23,7 @@ class Transip_DomainService
 	/** The SOAP service that corresponds with this class. */
 	const SERVICE = 'DomainService';
 	/** The API version. */
-	const API_VERSION = '4.2';
+	const API_VERSION = '5.2';
 	/** @var SoapClient  The SoapClient used to perform the SOAP calls. */
 	protected static $_soapClient = null;
 
@@ -108,13 +107,14 @@ class Transip_DomainService
 	protected static function _sign($parameters)
 	{
 		// Fixup our private key, copy-pasting the key might lead to whitespace faults
-		if(!preg_match('/-----BEGIN RSA PRIVATE KEY-----(.*)-----END RSA PRIVATE KEY-----/si', Transip_ApiSettings::$privateKey, $matches))
+		if(!preg_match('/-----BEGIN (RSA )?PRIVATE KEY-----(.*)-----END (RSA )?PRIVATE KEY-----/si', Transip_ApiSettings::$privateKey, $matches))
 			die('<p>Could not find your private key, please supply your private key in the ApiSettings file. You can request a new private key in your TransIP Controlpanel.</p>');
 
-		$key = $matches[1];
+		$key = $matches[2];
 		$key = preg_replace('/\s*/s', '', $key);
 		$key = chunk_split($key, 64, "\n");
-		$key = "-----BEGIN RSA PRIVATE KEY-----\n" . $key . "-----END RSA PRIVATE KEY-----";
+
+		$key = "-----BEGIN PRIVATE KEY-----\n" . $key . "-----END PRIVATE KEY-----";
 
 		$digest = self::_sha512Asn1(self::_encodeParameters($parameters));
 		if(!@openssl_private_encrypt($digest, $signature, $key))
@@ -404,9 +404,7 @@ class Transip_DomainService
 
 	/**
 	 * Starts an owner change of a Domain, brings additional costs with the following TLDs:
-	 * .nl
 	 * .be
-	 * .eu
 	 *
 	 * @param string $domainName the domainName to change the owner for
 	 * @param Transip_WhoisContact $registrantWhoisContact the new contact data for this

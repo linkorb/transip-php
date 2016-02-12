@@ -2,6 +2,10 @@
 
 /**
  * This class holds the settings for the TransIP API.
+ * 
+ * @package Transip
+ * @class ApiSettings
+ * @author TransIP (support@transip.nl)
  */
 class Transip_ApiSettings
 {

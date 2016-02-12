@@ -1,23 +1,23 @@
 <?php
 
 /**
- * This class models a WebhostingPackage
+ * This class models a Product
  *
  * @package Transip
- * @class WebhostingPackage
+ * @class Product
  * @author TransIP (support@transip.nl)
  */
-class Transip_WebhostingPackage
+class Transip_Product
 {
 	/**
-	 * Name of the webhosting package
+	 * Name of the product
 	 *
 	 * @var string
 	 */
 	public $name;
 
 	/**
-	 * Describes this webhosting package
+	 * Describes this product
 	 *
 	 * @var string
 	 */
@@ -31,7 +31,7 @@ class Transip_WebhostingPackage
 	public $price;
 
 	/**
-	 * Price for renewing the package in euros.
+	 * Price for renewing the product in euros.
 	 *
 	 * @var float
 	 */

@@ -15,7 +15,6 @@ require_once('SubDomain.php');
  * @package Transip
  * @class WebhostingService
  * @author TransIP (support@transip.nl)
- * @version 20130704 07:11
  */
 class Transip_WebhostingService
 {
@@ -23,7 +22,7 @@ class Transip_WebhostingService
 	/** The SOAP service that corresponds with this class. */
 	const SERVICE = 'WebhostingService';
 	/** The API version. */
-	const API_VERSION = '4.2';
+	const API_VERSION = '5.2';
 	/** @var SoapClient  The SoapClient used to perform the SOAP calls. */
 	protected static $_soapClient = null;
 
@@ -106,13 +105,14 @@ class Transip_WebhostingService
 	protected static function _sign($parameters)
 	{
 		// Fixup our private key, copy-pasting the key might lead to whitespace faults
-		if(!preg_match('/-----BEGIN RSA PRIVATE KEY-----(.*)-----END RSA PRIVATE KEY-----/si', Transip_ApiSettings::$privateKey, $matches))
+		if(!preg_match('/-----BEGIN (RSA )?PRIVATE KEY-----(.*)-----END (RSA )?PRIVATE KEY-----/si', Transip_ApiSettings::$privateKey, $matches))
 			die('<p>Could not find your private key, please supply your private key in the ApiSettings file. You can request a new private key in your TransIP Controlpanel.</p>');
 
-		$key = $matches[1];
+		$key = $matches[2];
 		$key = preg_replace('/\s*/s', '', $key);
 		$key = chunk_split($key, 64, "\n");
-		$key = "-----BEGIN RSA PRIVATE KEY-----\n" . $key . "-----END RSA PRIVATE KEY-----";
+
+		$key = "-----BEGIN PRIVATE KEY-----\n" . $key . "-----END PRIVATE KEY-----";
 
 		$digest = self::_sha512Asn1(self::_encodeParameters($parameters));
 		if(!@openssl_private_encrypt($digest, $signature, $key))
@@ -248,6 +248,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName Domain to get upgrades for. Must be owned by the current user.
 	 * @return Transip_WebhostingPackage[] Available packages to which the domain name can be upgraded to.
+	 * @throws ApiException Throwns an Exception ig the domain is not found in the requester account
 	 */
 	public static function getAvailableUpgrades($domainName)
 	{
@@ -259,6 +260,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName The domain to upgrade webhosting for. Must be owned by the current user.
 	 * @param string $newWebhostingPackage The new webhosting package, must be one of the packages returned getAvailableUpgrades() for the given domain name
+	 * @throws ApiException Throws an exception when the domain name does not belong to the requester (or is not found) or the package can't be upgraded
 	 */
 	public static function upgrade($domainName, $newWebhostingPackage)
 	{
@@ -270,6 +272,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName The domain to cancel the webhosting for
 	 * @param string $endTime the time to cancel the domain (WebhostingService::CANCELLATIONTIME_END (end of contract) or WebhostingService::CANCELLATIONTIME_IMMEDIATELY (as soon as possible))
+	 * @throws ApiException Throws an exception when the domain name does not belong to the requester (or is not found).
 	 */
 	public static function cancel($domainName, $endTime)
 	{
@@ -281,6 +284,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName Domain to set webhosting FTP password for
 	 * @param string $newPassword The new FTP password for the webhosting package
+	 * @throws ApiException When the new password is empty
 	 */
 	public static function setFtpPassword($domainName, $newPassword)
 	{
@@ -292,6 +296,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to create cronjob for
 	 * @param Transip_Cronjob $cronjob the cronjob to create. All fields must be valid.
+	 * @throws ApiException When the new URL is either invalid or the URL is not a URL linking to the domain the CronJob is for.
 	 */
 	public static function createCronjob($domainName, $cronjob)
 	{
@@ -304,6 +309,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to delete a cronjob
 	 * @param Transip_Cronjob $cronjob Cronjob the cronjob to delete. Be aware that all matching cronjobs will be removed.
+	 * @throws ApiException When the CronJob that needs to be deleted is not found.
 	 */
 	public static function deleteCronjob($domainName, $cronjob)
 	{
@@ -327,6 +333,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to modify the mailbox for
 	 * @param Transip_MailBox $mailBox the MailBox to modify
+	 * @throws ApiException When the MailBox that needs to be modified is not found.
 	 */
 	public static function modifyMailBox($domainName, $mailBox)
 	{
@@ -339,6 +346,7 @@ class Transip_WebhostingService
 	 * @param string $domainName the domain name of the webhosting package to set the mailbox password for
 	 * @param Transip_MailBox $mailBox the MailBox to set the password for
 	 * @param string $newPassword the new password for the MailBox, cannot be empty.
+	 * @throws ApiException When the MailBox that needs to be modified is not found.
 	 */
 	public static function setMailBoxPassword($domainName, $mailBox, $newPassword)
 	{
@@ -350,6 +358,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to remove the MailBox from
 	 * @param Transip_MailBox $mailBox the mailbox object to remove
+	 * @throws ApiException When the MailBox that needs to be deleted is not found.
 	 */
 	public static function deleteMailBox($domainName, $mailBox)
 	{
@@ -372,6 +381,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to modify the MailForward from
 	 * @param Transip_MailForward $mailForward the MailForward to modify
+	 * @throws ApiException When the MailForward that needs to be modified is not found.
 	 */
 	public static function modifyMailForward($domainName, $mailForward)
 	{
@@ -428,6 +438,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to delete the Db for
 	 * @param Transip_Db $db Db object to remove
+	 * @throws ApiException When the Database that needs to be deleted is not found.
 	 */
 	public static function deleteDatabase($domainName, $db)
 	{
@@ -450,6 +461,7 @@ class Transip_WebhostingService
 	 *
 	 * @param string $domainName the domain name of the webhosting package to delete the SubDomain for
 	 * @param Transip_SubDomain $subDomain SubDomain object to delete
+	 * @throws ApiException When the Subdomain that needs to be deleted is not found.
 	 */
 	public static function deleteSubdomain($domainName, $subDomain)
 	{

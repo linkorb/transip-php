@@ -7,7 +7,6 @@
  * @package Transip
  * @class DataCenterVisitor
  * @author TransIP (support@transip.nl)
- * @version 20130704 07:11
  */
 class Transip_DataCenterVisitor
 {

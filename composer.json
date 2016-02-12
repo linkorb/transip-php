@@ -2,7 +2,7 @@
     "name": "linkorb/transip-php",
     "description": "Unofficial TransIP PHP API Repository. Composer-ready.",
     "homepage": "http://www.github.com/linkorb/transip-php",
-    "keywords": ["php", "api"],
+    "keywords": ["php", "api", "transip"],
     "type": "library",
     "authors": [
         {
