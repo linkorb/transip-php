@@ -21,5 +21,8 @@
     },
     "autoload": {
         "classmap": ["Transip/"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }
